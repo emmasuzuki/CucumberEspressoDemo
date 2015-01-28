@@ -27,14 +27,14 @@ CucumberEspressoDemo
     }
     ```
 
-2. Application ID / Runner setup
+2. Application ID / Runner setup in app/build.gradle
 
     ```
     testApplicationId "com.emmasuzuki.cucumberespressodemo.test"
     testInstrumentationRunner "com.emmasuzuki.cucumberespressodemo.test.Instrumentation"
     ```
 
-3. Set assets directory for feature files
+3. Set assets directory for feature files in app/build.gradle
 
     ```
     sourceSets {
