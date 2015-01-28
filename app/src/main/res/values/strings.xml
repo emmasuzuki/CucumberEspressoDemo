@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">EspressoSpoon</string>
+
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="submit">Submit</string>
+
+    <string name="msg_email_error">Please enter your email</string>
+    <string name="msg_password_error">Please enter your password</string>
+    <string name="msg_mismatch">Your email or password is wrong</string>
+
+</resources>
