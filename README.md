@@ -68,7 +68,7 @@ CucumberEspressoDemo
       Examples:
         | email              | password   | see   |
         | espresso@spoon.com | bananacake | true  |
-        | espresso@spoon.com | lemoncake  | false |
+        | espresso@spoon.com | lemoncake  | false |     <-- valid email and password
         | latte@spoon.com    | lemoncake  | true  |
     
     
