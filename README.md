@@ -1,6 +1,18 @@
 CucumberEspressoDemo
 ====================
 
+Cucumber is BDD framework which works for iOS, Android and more.
+For Android, we are going to use cucumber-jvm, java port of cucumber.
+
+BDD's behavior text is written in a business-readable domain-specific language.
+It aims to communicate better between non-tech to tech over Software trueness and quality.  
+The readable behavior also serves as documentation.
+
+As of 1/27/2015, there are not good cucumber support on Android Studio.  
+It would be a little bit of pain that you need to manually translate behavior into step definition annotation.
+Hopefully, Gherkin plugin (Cucumber plugin) (https://plugins.jetbrains.com/plugin/7211?pr=androidstudio) is fixed soon to work with Android Studio 1.0.2. 
+If Gherkin plugin starts to work with Android Studio, it should make BDD more fun.  
+
 ##Setup
 1. Create custom instrumentation runner
 
@@ -117,6 +129,8 @@ On Android Studio, take the following steps:
 7. Click Run
     
 ##Write code to make the behavior pass
+
+Write code and run test again.  Observe the tests pass.
 
 ##Any Questions ? 
 Please feel free to contact me at emma11suzuki@gmail.com
