@@ -10,8 +10,7 @@ The readable behavior also serves as documentation.
 
 As of 1/27/2015, there are not good cucumber support on Android Studio.  
 It would be a little bit of pain that you need to manually translate behavior into step definition annotation.
-However, Gherkin plugin (https://plugins.jetbrains.com/plugin/7211?pr=androidstudio) supposed to work with Android Studio but it is not supporting Android Studio 1.0.2. 
-** Gherkin plugin is Cucumber plugin **
+Hopefully, Gherkin plugin (Cucumber plugin) (https://plugins.jetbrains.com/plugin/7211?pr=androidstudio) is fixed soon to work with Android Studio 1.0.2. 
 If Gherkin plugin starts to work with Android Studio, it should make BDD more fun.  
 
 ##Setup
