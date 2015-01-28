@@ -51,8 +51,8 @@ public class LoginActivitySteps extends ActivityInstrumentationTestCase2<LoginAc
         onView(withId(R.id.submit)).perform(click());
     }
 
-    @Then("^I should see (\\S+) on the (\\S+)$")
-    public void I_should_see_error_on_the_editTextView(final String error, final String viewName) {
+    @Then("^I should see error on the (\\S+)$")
+    public void I_should_see_error_on_the_editTextView(final String viewName) {
         int viewId = (viewName.equals("email")) ? R.id.email : R.id.password;
         int messageId = (viewName.equals("email")) ? R.string.msg_email_error : R.string.msg_password_error;
 
