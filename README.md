@@ -82,10 +82,10 @@ CucumberEspressoDemo
     
     in step definition
     
-    "Then I should <see> auth error" in behavior translates to
+    "Then I should see error on the <view>" in behavior translates to
     
-    @Then("^I should see (\\S+) on the (\\S+)$")
-    public void I_should_see_error_on_the_editTextView(final String error, final String viewName) {}
+    @Then("^I should see error on the (\\S+)$")
+    public void I_should_see_error_on_the_editTextView(final String viewName) {}
     
 ##Write Espresso test in step definition
 
