@@ -86,21 +86,21 @@ If Gherkin plugin starts to work with Android Studio, it should make BDD more fu
     
 ##Write step definition
 
-    EX) 
-    "Given I have a LoginActivity" in behavior translates to
+```java
+EX) 
+"Given I have a LoginActivity" in behavior translates to
     
-    @Given("^I have a LoginActivity")
-    public void I_have_a_LoginActivity(){}
+@Given("^I have a LoginActivity")
+public void I_have_a_LoginActivity(){}
     
-    in step definition
+in step definition
     
-    "Then I should see error on the <view>" in behavior translates to
+"Then I should see error on the <view>" in behavior translates to
     
-    ```java
-    @Then("^I should see error on the (\\S+)$")
-    public void I_should_see_error_on_the_editTextView(final String viewName) {}
-    ```
-    
+@Then("^I should see error on the (\\S+)$")
+public void I_should_see_error_on_the_editTextView(final String viewName) {}
+```
+ 
 ##Write Espresso test in step definition
 
 ```java
