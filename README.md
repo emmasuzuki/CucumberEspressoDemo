@@ -96,25 +96,27 @@ If Gherkin plugin starts to work with Android Studio, it should make BDD more fu
     
     "Then I should see error on the <view>" in behavior translates to
     
+    ```java
     @Then("^I should see error on the (\\S+)$")
     public void I_should_see_error_on_the_editTextView(final String viewName) {}
+    ```
     
 ##Write Espresso test in step definition
 
 ```java
-    @When("^I input email (\\S+)$")
-    public void I_input_email(final String email) {
-        onView(withId(R.id.email)).perform(typeText(email));
-    }
+@When("^I input email (\\S+)$")
+public void I_input_email(final String email) {
+    onView(withId(R.id.email)).perform(typeText(email));
+}
     
-    @Then("^I should (true|false) auth error$")
-    public void I_should_see_auth_error(boolean shouldSeeError) {
-        if (shouldSeeError) {
-            onView(withId(R.id.error)).check(matches(isDisplayed()));
-        } else {
-            onView(withId(R.id.error)).check(matches(not(isDisplayed())));
-        }
+@Then("^I should (true|false) auth error$")
+public void I_should_see_auth_error(boolean shouldSeeError) {
+    if (shouldSeeError) {
+        onView(withId(R.id.error)).check(matches(isDisplayed()));
+    } else {
+        onView(withId(R.id.error)).check(matches(not(isDisplayed())));
     }
+}
 ```
 ##Run
 On command line, run with `$./gradlew connectedCheck`
