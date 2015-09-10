@@ -16,7 +16,7 @@ If Gherkin plugin starts to work with Android Studio, it should make BDD more fu
 ##Setup
 1. Create custom instrumentation runner
 
-    ```
+    ```java
     public class Instrumentation extends MonitoringInstrumentation {
 
       private final CucumberInstrumentationCore mInstrumentationCore = new CucumberInstrumentationCore(this);
@@ -101,6 +101,7 @@ If Gherkin plugin starts to work with Android Studio, it should make BDD more fu
     
 ##Write Espresso test in step definition
 
+    ```
     @When("^I input email (\\S+)$")
     public void I_input_email(final String email) {
         onView(withId(R.id.email)).perform(typeText(email));
@@ -114,7 +115,8 @@ If Gherkin plugin starts to work with Android Studio, it should make BDD more fu
             onView(withId(R.id.error)).check(matches(not(isDisplayed())));
         }
     }
-
+    ```
+    
 ##Run
 On command line, run with `$./gradlew connectedCheck`
 
