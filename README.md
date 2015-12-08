@@ -8,10 +8,14 @@ BDD's behavior text is written in a business-readable domain-specific language.
 It aims to communicate better between non-tech to tech over Software trueness and quality.  
 The readable behavior also serves as documentation.
 
-As of 1/27/2015, there are not good cucumber support on Android Studio.  
+~~As of 1/27/2015, there are not good cucumber support on Android Studio.  
 It would be a little bit of pain that you need to manually translate behavior into step definition annotation.
-Hopefully, Gherkin plugin (Cucumber plugin) (https://plugins.jetbrains.com/plugin/7211?pr=androidstudio) is fixed soon to work with Android Studio 1.0.2. 
-If Gherkin plugin starts to work with Android Studio, it should make BDD more fun.  
+Hopefully, Gherkin plugin (Cucumber plugin) (https://plugins.jetbrains.com/plugin/7211?pr=androidstudio) is fixed soon to work with Android Studio 1.0.2.
+If Gherkin plugin starts to work with Android Studio, it should make BDD more fun.~~
+
+###UPDATE (2015/12/08): 
+Gherkin plugin is working with Android Studio 2.0. Manual translation is still required but .feature file has pretty syntax highlighting and any invalid cucumber syntax will be flagged with an error.
+Install Plugin: Android Studio > Preferences > Plugins > Search "Gherkin" > Install & Restart Android Studio
 
 ##Setup
 1. Create custom instrumentation runner
