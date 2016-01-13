@@ -133,7 +133,7 @@ On Android Studio, take the following steps:
 3. Select Android Tests
 4. Put any name at Name: 
 5. Select "app" for module
-6. Add com.emmasuzuki.cucumberespressodemo.test.Instrumentation for specific instrumentation runner
+6. Add the created custom runner for specific instrumentation runner
 7. Hit Apply
 8. Choose the craeted Run configuration 
 9. Click Run
