@@ -130,11 +130,13 @@ On Android Studio, take the following steps:
 
 1. Run > Edit Configurations
 2. Click "+" on left pane
-3. Select "app" for module
-4. Select custom instrumentation runner we created at Setup for specific instrumentation runner
-5. Apply
-6. Choose the craeted Run configuration 
-7. Click Run
+3. Select Android Tests
+4. Put any name at Name: 
+5. Select "app" for module
+6. Add com.emmasuzuki.cucumberespressodemo.test.Instrumentation for specific instrumentation runner
+7. Hit Apply
+8. Choose the craeted Run configuration 
+9. Click Run
     
 ##Write code to make the behavior pass
 
