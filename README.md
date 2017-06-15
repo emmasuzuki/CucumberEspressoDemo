@@ -22,7 +22,7 @@ Install Plugin: Android Studio > Preferences > Plugins > Search "Gherkin" > Inst
     androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.0'
     ```
     
-2. Create custom instrumentation runner
+2. Create custom instrumentation runner under androidTest package
 
     ```java
     public class Instrumentation extends MonitoringInstrumentation {
@@ -47,25 +47,32 @@ Install Plugin: Android Studio > Preferences > Plugins > Search "Gherkin" > Inst
     }
     ```
 
-3. Application ID / Runner setup in app/build.gradle
+3. Application ID / Runner setup in app/build.gradle. Make sure this matches with the package name of the test. 
 
     ```
     testApplicationId "com.emmasuzuki.cucumberespressodemo.test"
     testInstrumentationRunner "com.emmasuzuki.cucumberespressodemo.test.Instrumentation"
     ```
 
-4. Set assets directory for feature files in app/build.gradle
+4. Create assets/features directory under androidTest. This directory holds behavior(.feature) files.
+
+5. Set assets directory in app/build.gradle.
 
     ```
-    sourceSets {
-        androidTest {
-            assets.srcDirs = ['src/androidTest/assets']
+    android {
+        ...
+        sourceSets {
+            androidTest {
+                assets.srcDirs = ['src/androidTest/assets']
+            }
         }
     }
     ```
     
 ## Write behavior
+    Make a file, login.feature, and put under src/androidTest/assets/features.
     
+    ```
     Feature: Login
     Perform login on email and password are inputted
 
@@ -81,7 +88,7 @@ Install Plugin: Android Studio > Preferences > Plugins > Search "Gherkin" > Inst
         | espresso@spoon.com | bananacake | true  |
         | espresso@spoon.com | lemoncake  | false |     <-- valid email and password
         | latte@spoon.com    | lemoncake  | true  |
-    
+    ```
     
 ## Write step definition
 
