@@ -13,7 +13,16 @@ Gherkin plugin works with Android Studio 2.0. Manual translation is still requir
 Install Plugin: Android Studio > Preferences > Plugins > Search "Gherkin" > Install & Restart Android Studio
 
 ## Setup
-1. Create custom instrumentation runner
+1. Add dependencies
+
+    ```
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
+    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
+    androidTestCompile 'info.cukes:cucumber-android:1.2.0@jar'
+    androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.0'
+    ```
+    
+2. Create custom instrumentation runner
 
     ```java
     public class Instrumentation extends MonitoringInstrumentation {
@@ -38,14 +47,14 @@ Install Plugin: Android Studio > Preferences > Plugins > Search "Gherkin" > Inst
     }
     ```
 
-2. Application ID / Runner setup in app/build.gradle
+3. Application ID / Runner setup in app/build.gradle
 
     ```
     testApplicationId "com.emmasuzuki.cucumberespressodemo.test"
     testInstrumentationRunner "com.emmasuzuki.cucumberespressodemo.test.Instrumentation"
     ```
 
-3. Set assets directory for feature files in app/build.gradle
+4. Set assets directory for feature files in app/build.gradle
 
     ```
     sourceSets {
@@ -53,15 +62,6 @@ Install Plugin: Android Studio > Preferences > Plugins > Search "Gherkin" > Inst
             assets.srcDirs = ['src/androidTest/assets']
         }
     }
-    ```
-
-4. Add dependencies
-
-    ```
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
-    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
-    androidTestCompile 'info.cukes:cucumber-android:1.2.0@jar'
-    androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.0'
     ```
     
 ## Write behavior
