@@ -26,13 +26,13 @@ import cucumber.api.android.CucumberInstrumentationCore;
 
 public class Instrumentation extends MonitoringInstrumentation {
 
-    private final CucumberInstrumentationCore mInstrumentationCore = new CucumberInstrumentationCore(this);
+    private final CucumberInstrumentationCore instrumentationCore = new CucumberInstrumentationCore(this);
 
     @Override
     public void onCreate(Bundle arguments) {
         super.onCreate(arguments);
 
-        mInstrumentationCore.create(arguments);
+        instrumentationCore.create(arguments);
         start();
     }
 
@@ -41,6 +41,6 @@ public class Instrumentation extends MonitoringInstrumentation {
         super.onStart();
 
         waitForIdleSync();
-        mInstrumentationCore.start();
+        instrumentationCore.start();
     }
 }

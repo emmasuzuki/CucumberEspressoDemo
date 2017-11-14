@@ -20,7 +20,9 @@
 
 package com.emmasuzuki.cucumberespressodemo.test;
 
-import android.test.ActivityInstrumentationTestCase2;
+import android.app.Activity;
+import android.content.Intent;
+import android.support.test.rule.ActivityTestRule;
 import android.view.View;
 import android.widget.EditText;
 
@@ -29,31 +31,49 @@ import com.emmasuzuki.cucumberespressodemo.R;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.junit.Rule;
 import org.junit.internal.matchers.TypeSafeMatcher;
 
 import cucumber.api.CucumberOptions;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.Matchers.not;
 
 @CucumberOptions(features = "features")
-public class LoginActivitySteps extends ActivityInstrumentationTestCase2<LoginActivity> {
+public class LoginActivitySteps {
 
-    public LoginActivitySteps(LoginActivity activityClass) {
-        super(LoginActivity.class);
+    @Rule
+    public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
+
+    private Activity activity;
+    private Intent intent = new Intent();
+
+    @Before
+    public void setup() {
+        activityTestRule.launchActivity(null);
+        activity = activityTestRule.getActivity();
+    }
+
+    @After
+    public void tearDown() {
+        activityTestRule.finishActivity();
     }
 
     @Given("^I have a LoginActivity")
     public void I_have_a_LoginActivity() {
-        assertNotNull(getActivity());
+        assertNotNull(activity);
     }
 
     @When("^I input email (\\S+)$")
@@ -63,7 +83,7 @@ public class LoginActivitySteps extends ActivityInstrumentationTestCase2<LoginAc
 
     @When("^I input password \"(.*?)\"$")
     public void I_input_password(final String password) {
-        onView(withId(R.id.password)).perform(typeText(password));
+        onView(withId(R.id.password)).perform(typeText(password), closeSoftKeyboard());
     }
 
     @When("^I press submit button$")
@@ -76,7 +96,7 @@ public class LoginActivitySteps extends ActivityInstrumentationTestCase2<LoginAc
         int viewId = (viewName.equals("email")) ? R.id.email : R.id.password;
         int messageId = (viewName.equals("email")) ? R.string.msg_email_error : R.string.msg_password_error;
 
-        onView(withId(viewId)).check(matches(hasErrorText(getActivity().getString(messageId))));
+        onView(withId(viewId)).check(matches(hasErrorText(activity.getString(messageId))));
     }
 
     @Then("^I should (true|false) auth error$")
@@ -105,7 +125,7 @@ public class LoginActivitySteps extends ActivityInstrumentationTestCase2<LoginAc
 
         @Override
         public boolean matchesSafely(View view) {
-            if(!(view instanceof EditText)) {
+            if (!(view instanceof EditText)) {
                 return false;
             }
 

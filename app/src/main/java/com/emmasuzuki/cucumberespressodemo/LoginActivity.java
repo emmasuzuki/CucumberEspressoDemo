@@ -33,8 +33,8 @@ public class LoginActivity extends Activity {
     private static final String DEMO_EMAIL = "espresso@spoon.com";
     private static final String DEMO_PASSWORD = "lemoncake";
 
-    private EditText mEmail, mPassword;
-    private View mError;
+    private EditText emailEditText, passwordEditText;
+    private View errorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +42,8 @@ public class LoginActivity extends Activity {
 
         setContentView(R.layout.login);
 
-        mEmail = (EditText) findViewById(R.id.email);
-        mPassword = (EditText) findViewById(R.id.password);
+        emailEditText = findViewById(R.id.email);
+        passwordEditText = findViewById(R.id.password);
 
         View submitButton = findViewById(R.id.submit);
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +52,7 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
                 validateFields();
 
-                if (mEmail.getError() == null && mPassword.getError() == null) {
+                if (emailEditText.getError() == null && passwordEditText.getError() == null) {
                     validateAccount();
                 }
             }
@@ -60,28 +60,28 @@ public class LoginActivity extends Activity {
     }
 
     private void validateFields() {
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mEmail.getText().toString()).matches()) {
-            mEmail.setError(getString(R.string.msg_email_error));
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailEditText.getText().toString()).matches()) {
+            emailEditText.setError(getString(R.string.msg_email_error));
         } else {
-            mEmail.setError(null);
+            emailEditText.setError(null);
         }
 
-        if (mPassword.getText().toString().isEmpty()) {
-            mPassword.setError(getString(R.string.msg_password_error));
+        if (passwordEditText.getText().toString().isEmpty()) {
+            passwordEditText.setError(getString(R.string.msg_password_error));
         } else {
-            mPassword.setError(null);
+            passwordEditText.setError(null);
         }
     }
 
     private void validateAccount() {
-        if (mError == null) {
-            mError = findViewById(R.id.error);
+        if (errorView == null) {
+            errorView = findViewById(R.id.error);
         }
 
-        if (!mEmail.getText().toString().equals(DEMO_EMAIL) || !mPassword.getText().toString().equals(DEMO_PASSWORD)) {
-            mError.setVisibility(View.VISIBLE);
+        if (!emailEditText.getText().toString().equals(DEMO_EMAIL) || !passwordEditText.getText().toString().equals(DEMO_PASSWORD)) {
+            errorView.setVisibility(View.VISIBLE);
         } else {
-            mError.setVisibility(View.GONE);
+            errorView.setVisibility(View.GONE);
         }
     }
 }

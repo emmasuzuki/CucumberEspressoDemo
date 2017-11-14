@@ -1,15 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         applicationId "com.emmasuzuki.cucumberespressodemo"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testApplicationId "com.emmasuzuki.cucumberespressodemo.test"
         testInstrumentationRunner "com.emmasuzuki.cucumberespressodemo.test.Instrumentation"
@@ -42,10 +43,10 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:appcompat-v7:26.1.0'
 
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
-    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
-    androidTestCompile 'info.cukes:cucumber-android:1.2.0@jar'
-    androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.0'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestCompile 'com.android.support:support-annotations:26.1.0'
+    androidTestCompile 'info.cukes:cucumber-android:1.2.5@jar'
+    androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.4'
 }
