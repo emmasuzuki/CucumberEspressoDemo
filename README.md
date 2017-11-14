@@ -27,23 +27,23 @@ Install Plugin: Android Studio > Preferences > Plugins > Search "Gherkin" > Inst
     ```java
     public class Instrumentation extends MonitoringInstrumentation {
 
-      private final CucumberInstrumentationCore mInstrumentationCore = new CucumberInstrumentationCore(this);
+        private final CucumberInstrumentationCore mInstrumentationCore = new CucumberInstrumentationCore(this);
 
-      @Override
-      public void onCreate(Bundle arguments) {
-        super.onCreate(arguments);
+        @Override
+        public void onCreate(Bundle arguments) {
+            super.onCreate(arguments);
 
-        mInstrumentationCore.create(arguments);
-        start();
-      }
+            mInstrumentationCore.create(arguments);
+            start();
+        }
 
-      @Override
-      public void onStart() {
-        super.onStart();
+        @Override
+        public void onStart() {
+            super.onStart();
 
-        waitForIdleSync();
-        mInstrumentationCore.start();
-      }
+            waitForIdleSync();
+            mInstrumentationCore.start();
+        }
     }
     ```
 
