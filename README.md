@@ -16,10 +16,10 @@ Install Plugin: Android Studio > Preferences > Plugins > Search "Gherkin" > Inst
 1. Add dependencies
 
     ```
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
-    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
-    androidTestCompile 'info.cukes:cucumber-android:1.2.0@jar'
-    androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.0'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestCompile 'com.android.support:support-annotations:26.1.0'  // <-- match with the support lib version
+    androidTestCompile 'info.cukes:cucumber-android:1.2.5@jar'
+    androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.4'
     ```
     
 2. Create custom instrumentation runner under androidTest package
@@ -70,60 +70,63 @@ Install Plugin: Android Studio > Preferences > Plugins > Search "Gherkin" > Inst
     ```
     
 ## Write behavior
-    Make a file, login.feature, and put under src/androidTest/assets/features.
+   
+   Make a file, login.feature, and put under src/androidTest/assets/features.
     
-    ```
-    Feature: Login
-    Perform login on email and password are inputted
+   ```cucumber
+   Feature: Login
+   Perform login on email and password are inputted
 
-      Scenario Outline: Input email and password in correct format
-        Given I have a LoginActivity
-        When I input email <email>
-        And I input password "<password>"
-        And I press submit button
-        Then I should <see> auth error
+     Scenario Outline: Input email and password in correct format
+       Given I have a LoginActivity
+       When I input email <email>
+       And I input password "<password>"
+       And I press submit button
+       Then I should <see> auth error
 
-      Examples:
-        | email              | password   | see   |
-        | espresso@spoon.com | bananacake | true  |
-        | espresso@spoon.com | lemoncake  | false |     <-- valid email and password
-        | latte@spoon.com    | lemoncake  | true  |
-    ```
+     Examples:
+       | email              | password   | see   |
+       | espresso@spoon.com | bananacake | true  |
+       | espresso@spoon.com | lemoncake  | false |     <-- valid email and password
+       | latte@spoon.com    | lemoncake  | true  |
+   ```
     
 ## Write step definition
 
-```java
-EX) 
-"Given I have a LoginActivity" in behavior translates to
+   EX) 
+   "Given I have a LoginActivity" in behavior translates to
     
-@Given("^I have a LoginActivity")
-public void I_have_a_LoginActivity(){}
+   ```java
+   @Given("^I have a LoginActivity")
+   public void I_have_a_LoginActivity(){}
+   ``` 
+   in step definition.
     
-in step definition
+   "Then I should see error on the <view>" in behavior translates to
     
-"Then I should see error on the <view>" in behavior translates to
-    
-@Then("^I should see error on the (\\S+)$")
-public void I_should_see_error_on_the_editTextView(final String viewName) {}
-```
+   ```java
+   @Then("^I should see error on the (\\S+)$")
+   public void I_should_see_error_on_the_editTextView(final String viewName) {}
+   ```
  
 ## Write Espresso test in step definition
 
-```java
-@When("^I input email (\\S+)$")
-public void I_input_email(final String email) {
-    onView(withId(R.id.email)).perform(typeText(email));
-}
+   ```java
+   @When("^I input email (\\S+)$")
+   public void I_input_email(final String email) {
+       onView(withId(R.id.email)).perform(typeText(email));
+   }
     
-@Then("^I should (true|false) auth error$")
-public void I_should_see_auth_error(boolean shouldSeeError) {
-    if (shouldSeeError) {
-        onView(withId(R.id.error)).check(matches(isDisplayed()));
-    } else {
-        onView(withId(R.id.error)).check(matches(not(isDisplayed())));
-    }
-}
-```
+   @Then("^I should (true|false) auth error$")
+   public void I_should_see_auth_error(boolean shouldSeeError) {
+       if (shouldSeeError) {
+           onView(withId(R.id.error)).check(matches(isDisplayed()));
+       } else {
+           onView(withId(R.id.error)).check(matches(not(isDisplayed())));
+       }
+   }
+   ```
+   
 ## Run
 On command line, run with `$./gradlew connectedCheck`
 
@@ -134,13 +137,11 @@ On Android Studio, take the following steps:
 3. Select Android Tests
 4. Put any name at Name: 
 5. Select "app" for module
-6. Add the created custom runner for specific instrumentation runner
-7. Hit Apply
-8. Choose the craeted Run configuration 
-9. Click Run
+6. Hit Apply
+7. Choose the craeted Run configuration 
+8. Click Run
     
 ## Write code to make the behavior pass
-
 Write code and run test again.  Observe the tests pass.
 
 ## Any Questions ? 
