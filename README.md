@@ -8,18 +8,21 @@ BDD's behavior text is written in a business-readable domain-specific language.
 It aims to communicate better between non-tech to tech over Software trueness and quality.  
 The readable behavior also serves as documentation.
 
-~~As of 1/27/2015, there are not good cucumber support on Android Studio.  
-It would be a little bit of pain that you need to manually translate behavior into step definition annotation.
-Hopefully, Gherkin plugin (Cucumber plugin) (https://plugins.jetbrains.com/plugin/7211?pr=androidstudio) is fixed soon to work with Android Studio 1.0.2.
-If Gherkin plugin starts to work with Android Studio, it should make BDD more fun.~~
-
-###UPDATE (12/08/2015): 
-Gherkin plugin is working with Android Studio 2.0. Manual translation is still required but .feature file has pretty syntax highlighting and any invalid cucumber syntax will be flagged with an error.
+Gherkin plugin works with Android Studio 2.0. Manual translation is still required but .feature file has pretty syntax highlighting and any invalid cucumber syntax will be flagged with an error.
 
 Install Plugin: Android Studio > Preferences > Plugins > Search "Gherkin" > Install & Restart Android Studio
 
-##Setup
-1. Create custom instrumentation runner
+## Setup
+1. Add dependencies
+
+    ```
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
+    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
+    androidTestCompile 'info.cukes:cucumber-android:1.2.0@jar'
+    androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.0'
+    ```
+    
+2. Create custom instrumentation runner under androidTest package
 
     ```java
     public class Instrumentation extends MonitoringInstrumentation {
@@ -44,34 +47,32 @@ Install Plugin: Android Studio > Preferences > Plugins > Search "Gherkin" > Inst
     }
     ```
 
-2. Application ID / Runner setup in app/build.gradle
+3. Application ID / Runner setup in app/build.gradle. Make sure this matches with the package name of the test. 
 
     ```
     testApplicationId "com.emmasuzuki.cucumberespressodemo.test"
     testInstrumentationRunner "com.emmasuzuki.cucumberespressodemo.test.Instrumentation"
     ```
 
-3. Set assets directory for feature files in app/build.gradle
+4. Create assets/features directory under androidTest. This directory holds behavior(.feature) files.
+
+5. Set assets directory in app/build.gradle.
 
     ```
-    sourceSets {
-        androidTest {
-            assets.srcDirs = ['src/androidTest/assets']
+    android {
+        ...
+        sourceSets {
+            androidTest {
+                assets.srcDirs = ['src/androidTest/assets']
+            }
         }
     }
     ```
-
-4. Add dependencies
-
-    ```
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
-    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
-    androidTestCompile 'info.cukes:cucumber-android:1.2.0@jar'
-    androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.0'
-    ```
     
-##Write behavior
+## Write behavior
+    Make a file, login.feature, and put under src/androidTest/assets/features.
     
+    ```
     Feature: Login
     Perform login on email and password are inputted
 
@@ -87,9 +88,9 @@ Install Plugin: Android Studio > Preferences > Plugins > Search "Gherkin" > Inst
         | espresso@spoon.com | bananacake | true  |
         | espresso@spoon.com | lemoncake  | false |     <-- valid email and password
         | latte@spoon.com    | lemoncake  | true  |
+    ```
     
-    
-##Write step definition
+## Write step definition
 
 ```java
 EX) 
@@ -106,7 +107,7 @@ in step definition
 public void I_should_see_error_on_the_editTextView(final String viewName) {}
 ```
  
-##Write Espresso test in step definition
+## Write Espresso test in step definition
 
 ```java
 @When("^I input email (\\S+)$")
@@ -123,7 +124,7 @@ public void I_should_see_auth_error(boolean shouldSeeError) {
     }
 }
 ```
-##Run
+## Run
 On command line, run with `$./gradlew connectedCheck`
 
 On Android Studio, take the following steps:
@@ -138,9 +139,9 @@ On Android Studio, take the following steps:
 8. Choose the craeted Run configuration 
 9. Click Run
     
-##Write code to make the behavior pass
+## Write code to make the behavior pass
 
 Write code and run test again.  Observe the tests pass.
 
-##Any Questions ? 
+## Any Questions ? 
 Please feel free to contact me at emma11suzuki@gmail.com
