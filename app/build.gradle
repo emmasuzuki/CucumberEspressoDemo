@@ -1,4 +1,15 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.jacoco:org.jacoco.core:0.7.5.201505241946'
+    }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 26
@@ -10,7 +21,6 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
 
         testApplicationId "com.emmasuzuki.cucumberespressodemo.test"
         testInstrumentationRunner "com.emmasuzuki.cucumberespressodemo.test.Instrumentation"
