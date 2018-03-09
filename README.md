@@ -143,6 +143,3 @@ On Android Studio, take the following steps:
     
 ## Write code to make the behavior pass
 Write code and run test again.  Observe the tests pass.
-
-## Any Questions ? 
-Please feel free to contact me at emma11suzuki@gmail.com
