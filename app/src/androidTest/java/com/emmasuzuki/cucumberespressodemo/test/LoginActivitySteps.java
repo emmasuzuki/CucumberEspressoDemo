@@ -51,18 +51,16 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.Matchers.not;
 
-@CucumberOptions(features = "features")
 public class LoginActivitySteps {
 
     @Rule
     public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
     private Activity activity;
-    private Intent intent = new Intent();
 
     @Before
     public void setup() {
-        activityTestRule.launchActivity(null);
+        activityTestRule.launchActivity(new Intent());
         activity = activityTestRule.getActivity();
     }
 

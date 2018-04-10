@@ -1,6 +1,7 @@
 Feature: Login
     Perform login on email and password are inputted
 
+    @login-feature
     Scenario Outline: Input email and password in wrong format
         Given I have a LoginActivity
         When I input email <email>
@@ -13,7 +14,7 @@ Feature: Login
         | test  | lemoncake | email |
         | test@test.com || password |
 
-
+    @login-feature
     Scenario Outline: Input email and password in correct format
         Given I have a LoginActivity
         When I input email <email>

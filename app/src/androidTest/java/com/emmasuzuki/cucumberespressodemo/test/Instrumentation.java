@@ -22,8 +22,14 @@ package com.emmasuzuki.cucumberespressodemo.test;
 import android.os.Bundle;
 import android.support.test.runner.MonitoringInstrumentation;
 
+import com.emmasuzuki.cucumberespressodemo.BuildConfig;
+
+import cucumber.api.CucumberOptions;
 import cucumber.api.android.CucumberInstrumentationCore;
 
+@CucumberOptions(
+        features = "features",
+        glue = "com.emmasuzuki.cucumberespressodemo.test")
 public class Instrumentation extends MonitoringInstrumentation {
 
     private final CucumberInstrumentationCore instrumentationCore = new CucumberInstrumentationCore(this);
@@ -31,6 +37,11 @@ public class Instrumentation extends MonitoringInstrumentation {
     @Override
     public void onCreate(Bundle arguments) {
         super.onCreate(arguments);
+
+        String tags = BuildConfig.TEST_TAGS;
+        if (!tags.isEmpty()) {
+            arguments.putString("tags", tags.replaceAll(",", "--").replaceAll("\\s",""));
+        }
 
         instrumentationCore.create(arguments);
         start();
