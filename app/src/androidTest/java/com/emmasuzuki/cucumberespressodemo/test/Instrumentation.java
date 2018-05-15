@@ -23,6 +23,10 @@ import android.os.Bundle;
 import android.support.test.runner.MonitoringInstrumentation;
 
 import com.emmasuzuki.cucumberespressodemo.BuildConfig;
+import com.microsoft.appcenter.espresso.Factory;
+import com.microsoft.appcenter.espresso.ReportHelper;
+
+import org.junit.Rule;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.android.CucumberInstrumentationCore;
@@ -31,6 +35,10 @@ import cucumber.api.android.CucumberInstrumentationCore;
         features = "features",
         glue = "com.emmasuzuki.cucumberespressodemo.test")
 public class Instrumentation extends MonitoringInstrumentation {
+
+    @Rule
+    public ReportHelper reportHelper = Factory.getReportHelper();
+
 
     private final CucumberInstrumentationCore instrumentationCore = new CucumberInstrumentationCore(this);
 

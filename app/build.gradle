@@ -54,12 +54,13 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
 
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
-    androidTestCompile 'com.android.support:support-annotations:26.1.0'
-    androidTestCompile 'info.cukes:cucumber-android:1.2.5@jar'
-    androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.4'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support:support-annotations:26.1.0'
+    androidTestImplementation 'info.cukes:cucumber-android:1.2.5@jar'
+    androidTestImplementation 'info.cukes:cucumber-picocontainer:1.2.4'
+    androidTestImplementation 'com.microsoft.appcenter:espresso-test-extension:1.2'
 }
 
 def getTestTags() {

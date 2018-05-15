@@ -3,8 +3,8 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
-      #- image: circleci/android:api-26-alpha
+#      - image: circleci/openjdk:8-jdk
+      - image: circleci/android:api-26-alpha
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
