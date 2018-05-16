@@ -2,30 +2,20 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-#      - image: circleci/openjdk:8-jdk
       - image: circleci/android:api-27-alpha
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
 
     working_directory: ~/repo
 
     environment:
-      # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
 
     steps:
       - checkout
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "build.gradle" }}
-          # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
       - run: ./gradlew dependencies
@@ -35,21 +25,23 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      # run tests!
       - run: ./gradlew test
-      - run:
-          name: Setup emulator
-          command: sdkmanager "system-images;android-22;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-22;default;armeabi-v7a"
-      - run:
-          name: Launch emulator
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -gpu off -accel on
-          background: true
-      - run:
-          name: Wait for emulator to start
-          command: circle-android wait-for-boot
-      - run:
-          name: Run Tests
-          command: ./gradlew connectedAndroidTest --stacktrace -PdisablePreDex
 
-      - store_test_results:
-         path: app/build/test-results
+
+      - run:
+        name: Assemble APKs
+        command: ./gradlew assembleAndroidTest assemble
+      - run:
+        name: Dump Google Cloud Credentials to file
+        command: echo ${GOOGLE_AUTH} > ${HOME}/gcp-key.json
+      - run: gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
+      - run: gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+      - run:
+        name: Configure environment
+        command: |
+          echo 'export APK_PATH=`find . -path "*.apk" ! -path "*unaligned.apk" ! -path "*Test*.apk" -print -quit`' >> $BASH_ENV
+          echo 'export TEST_APK_PATH=`find "." "-path" "*Test*.apk" -print -quit`' >> $BASH_ENV
+      - run:
+        name: Run UI Tests
+        command: gcloud firebase test android run --type instrumentation --app ${APK_PATH} --test ${TEST_APK_PATH} --device model=Nexus6P,version=27,locale=en,orientation=portrait --timeout 30m
+        no_output_timeout: 30m
