@@ -1,46 +1,78 @@
+defaults: &defaults
+  docker:
+    - image: circleci/android:api-27-alpha
+
+  working_directory: ~/repo
+
+  environment:
+    JVM_OPTS: -Xmx3200m
+    TERM: dumb
+
 version: 2
 jobs:
-  build:
-    docker:
-      - image: circleci/android:api-27-alpha
+    prepare_proj:
+      <<: *defaults
+      steps:
+        - checkout
 
-    working_directory: ~/repo
+        - restore_cache:
+            keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            - v1-dependencies-
 
-    environment:
-      JVM_OPTS: -Xmx3200m
-      TERM: dumb
+        - run: ./gradlew dependencies
 
-    steps:
-      - checkout
+        - save_cache:
+            paths:
+              - ~/.gradle
+            key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "build.gradle" }}
-          - v1-dependencies-
+    unit_test:
+      <<: *defaults
+      steps:
+        - run: ./gradlew test
 
-      - run: ./gradlew dependencies
+    assemble_apks:
+      <<: *defaults
+      steps:
+        - run:
+            name: Assemble APKs
+            command: ./gradlew assembleAndroidTest assemble
 
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
+    ui_test:
+      <<: *defaults
+      steps:
+        - run:
+            name: Dump Google Cloud Credentials to file
+            command: echo ${GOOGLE_AUTH} > ${HOME}/gcp-key.json
+        - run: gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
+        - run: gcloud --quiet config set project ${PROJECT_ID}
+        - run:
+            name: Configure environment
+            command: |
+              echo 'export APK_PATH=`find . -path "*.apk" ! -path "*unaligned.apk" ! -path "*Test*.apk" -print -quit`' >> $BASH_ENV
+              echo 'export TEST_APK_PATH=`find "." "-path" "*Test*.apk" -print -quit`' >> $BASH_ENV
+        - run:
+            name: Run UI Tests
+            command: gcloud firebase test android run --type instrumentation --app ${APK_PATH} --test ${TEST_APK_PATH} --device model=Nexus6P,version=27,locale=en,orientation=portrait --timeout 30m
+            no_output_timeout: 30m
 
-      - run: ./gradlew test
+workflows:
+  version: 2
+  build-n-test:
+    jobs:
+      - prepare_proj
+      - unit_test:
+        requires:
+          - prepare_proj
+      - assemble_apks:
+        requires:
+          - prepare_proj
+      - ui_test:
+        requires:
+          - assemble_apks
+        filters:
+          branches:
+            only:
+              - master
 
-      - run:
-          name: Assemble APKs
-          command: ./gradlew assembleAndroidTest assemble
-      - run:
-          name: Dump Google Cloud Credentials to file
-          command: echo ${GOOGLE_AUTH} > ${HOME}/gcp-key.json
-      - run: gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
-      - run: gcloud --quiet config set project ${PROJECT_ID}
-      - run:
-          name: Configure environment
-          command: |
-            echo 'export APK_PATH=`find . -path "*.apk" ! -path "*unaligned.apk" ! -path "*Test*.apk" -print -quit`' >> $BASH_ENV
-            echo 'export TEST_APK_PATH=`find "." "-path" "*Test*.apk" -print -quit`' >> $BASH_ENV
-      - run:
-          name: Run UI Tests
-          command: gcloud firebase test android run --type instrumentation --app ${APK_PATH} --test ${TEST_APK_PATH} --device model=sailfish,version=27,locale=en,orientation=portrait --timeout 30m
-          no_output_timeout: 30m
