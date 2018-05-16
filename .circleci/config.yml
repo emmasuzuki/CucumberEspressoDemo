@@ -52,4 +52,4 @@ jobs:
           command: ./gradlew connectedAndroidTest --stacktrace -PdisablePreDex
 
       - store_test_results:
-        path: app/build/test-results
+         path: app/build/test-results
