@@ -49,4 +49,4 @@ jobs:
           command: circle-android wait-for-boot
       - run:
           name: Run Tests
-          command: ./gradlew connectedAndroidTest
+          command: ./gradlew connectedAndroidTest --stacktrace
