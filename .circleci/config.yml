@@ -46,4 +46,4 @@ jobs:
           background: true
       - run:
           name: Run Tests
-          command: ./gradlew :demo:connectedAndroidTest
+          command: ./gradlew connectedAndroidTest
