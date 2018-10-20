@@ -48,6 +48,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.Matchers.not;
 
@@ -58,19 +59,19 @@ public class LoginActivitySteps {
 
     private Activity activity;
 
-    @Before
+    @Before("@login-feature")
     public void setup() {
         activityTestRule.launchActivity(new Intent());
         activity = activityTestRule.getActivity();
     }
 
-    @After
+    @After("@login-feature")
     public void tearDown() {
         activityTestRule.finishActivity();
     }
 
-    @Given("^I have a LoginActivity")
-    public void I_have_a_LoginActivity() {
+    @Given("^I am on login screen")
+    public void I_am_on_login_screen() {
         assertNotNull(activity);
     }
 
@@ -89,6 +90,11 @@ public class LoginActivitySteps {
         onView(withId(R.id.submit)).perform(click());
     }
 
+    @When("^I tap sign up button$")
+    public void I_tap_sign_up_button() {
+        onView(withId(R.id.signup)).perform(click());
+    }
+
     @Then("^I should see error on the (\\S+)$")
     public void I_should_see_error_on_the_editTextView(final String viewName) {
         int viewId = (viewName.equals("email")) ? R.id.email : R.id.password;
@@ -104,6 +110,11 @@ public class LoginActivitySteps {
         } else {
             onView(withId(R.id.error)).check(matches(not(isDisplayed())));
         }
+    }
+
+    @Then("^I should see sign up screen$")
+    public void I_should_see_sign_up_screen() {
+        onView(withId(R.id.page_title)).check(matches(withText(R.string.signup)));
     }
 
     private static Matcher<? super View> hasErrorText(String expectedError) {
@@ -129,7 +140,7 @@ public class LoginActivitySteps {
 
             EditText editText = (EditText) view;
 
-            return mExpectedError.equals(editText.getError());
+            return mExpectedError.equals(editText.getError().toString());
         }
 
         @Override

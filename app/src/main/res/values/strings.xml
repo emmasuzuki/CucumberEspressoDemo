@@ -6,7 +6,12 @@
     <string name="login">Login</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="not_have_account">Do not have an account?</string>
+    <string name="have_account">Have an account?</string>
+    <string name="signup">Sign Up</string>
     <string name="submit">Submit</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
 
     <string name="msg_email_error">Please enter your email</string>
     <string name="msg_password_error">Please enter your password</string>

@@ -8,31 +8,39 @@
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingTop="60dp">
+        android:paddingTop="20dp">
 
         <TextView
             android:id="@+id/page_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/login"
+            android:text="@string/signup"
             android:textSize="40sp" />
 
-        <TextView
-            android:id="@+id/error"
+        <EditText
+            android:id="@+id/first_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/msg_mismatch"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="20sp"
-            android:visibility="gone" />
+            android:layout_marginTop="40dp"
+            android:hint="@string/first_name"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@+id/last_name" />
+
+        <EditText
+            android:id="@+id/last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="@string/last_name"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@+id/email_name" />
 
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="12dp"
             android:hint="@string/email"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
@@ -42,7 +50,7 @@
             android:id="@id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:hint="@string/password"
             android:imeOptions="actionSend"
             android:inputType="textPassword" />
@@ -67,15 +75,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/not_have_account"/>
+                android:text="@string/have_account"/>
 
             <TextView
-                android:id="@+id/signup"
+                android:id="@+id/login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:textColor="@color/link"
-                android:text="@string/signup"/>
+                android:text="@string/login"/>
         </LinearLayout>
 
     </LinearLayout>
