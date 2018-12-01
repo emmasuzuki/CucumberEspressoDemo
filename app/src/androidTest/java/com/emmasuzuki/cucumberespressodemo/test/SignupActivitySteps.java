@@ -21,6 +21,7 @@
 package com.emmasuzuki.cucumberespressodemo.test;
 
 import android.content.Intent;
+import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 
 import com.emmasuzuki.cucumberespressodemo.R;
@@ -66,6 +67,8 @@ public class SignupActivitySteps {
 
     @When("^I tap login button$")
     public void I_tap_login_button() {
+//        Close the keyboard else the login button is not available for click on the screen
+        Espresso.closeSoftKeyboard();
         onView(withId(R.id.login)).perform(click());
     }
 
